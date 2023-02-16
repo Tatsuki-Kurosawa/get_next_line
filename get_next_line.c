@@ -1,7 +1,6 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 #include <stdio.h>
-// buf = newstr, static save = str, line = newlineari かと
 
 char	*get_next_line(int fd)
 {
@@ -35,44 +34,35 @@ char	*setstr(int fd, char *str)
 	{
 		num_of_byte = read(fd, read_str, BUFFER_SIZE);
 		read_str[num_of_byte] = '\0';
-		if (num_of_byte == -1)			// もしnum_of_byteが-1になった時に、次回の読み込みがここから始まればこれで何の問題もない
+		if (num_of_byte == -1)
 		{
 			free(read_str);
 			return (NULL);
 		}
-		else if (num_of_byte == 0)
-			break ;
 		else
-			str = join(str, read_str);
+			str = join(str, read_str, num_of_byte);
+		if (!str)
+			break ;
 		if (ft_strchr(str, '\n'))
 			break ;
 	}
 	return (str);
 }
 
-// buf = newstr（読み込み格納）, static save = str（端文字列）, line = newlineari（出力文字列）かと
-char	*join(char *str, char *newstr)
+char	*join(char *str, char *read_str, ssize_t num_of_byte)
 {
 	char	*return_ptr;
-	size_t	len;
-	size_t	check;
 
-	if (!str)
-	{
-		len = ft_strlen(newstr);
-		return_ptr = (char *)malloc(sizeof(char) * (len + 1));
-		if (!return_ptr)
-			return (NULL);
-		check = ft_strlcpy(return_ptr, newstr, len + 1);
-		if (check != len)
-		{
-			free(return_ptr);
-			return (NULL);
-		}
-	}
+	if (num_of_byte == 0)
+		return_ptr = NULL;
 	else
-		return_ptr = ft_strjoin(str, newstr);
-	return (return_ptr);
+	{
+		if (!str)
+			return_ptr = ft_substr(read_str, 0, ft_strlen(read_str));
+		else
+			return_ptr = ft_strjoin(str, read_str);
+		return (return_ptr);
+	}
 }
 
 char	*getbeforenewline(char *str)
@@ -92,13 +82,13 @@ char	*getbeforenewline(char *str)
 	return (before_newline);
 }
 
-char	*getafternewline(char *returnvalue)
+char	*getafternewline(char *str)
 {
 	char	*newline_ptr;
 	char	*after_newline;
 	size_t	len;
 
-	newline_ptr = ft_strchr(returnvalue, '\n');
+	newline_ptr = ft_strchr(str, '\n');
 	if (!newline_ptr)
 		return (NULL);
 	len = ft_strlen(newline_ptr);

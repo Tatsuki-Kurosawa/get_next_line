@@ -1,4 +1,4 @@
-# ifndef GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
 # include <stdlib.h>
@@ -10,9 +10,9 @@
 
 char	*get_next_line(int fd);
 char	*setstr(int fd, char *str);
-char	*join(char *str, char *newstr);
+char	*join(char *str, char *read_str, ssize_t num_of_byte);
 char	*getbeforenewline(char *str);
-char	*getafternewline(char *returnvalue);
+char	*getafternewline(char *str);
 size_t	ft_strlen(const char *c);
 size_t	ft_strlcpy(char *dst, const char *src, size_t n);
 char	*ft_strchr(const char *str, int c);
