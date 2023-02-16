@@ -102,37 +102,31 @@ static char	*getafternewline(char *str)
 	return (after_newline);
 }
 
-// static char	*getnewline(char *str, int judge)	// judge == 0ならbefore, judge == 1ならafter
-// {
-// 	char	*newline;
-// 	char	*newline_ptr;
-// 	size_t	len;
+// setstrから出された文字列をそのまま使う
+static char	*getnewline(char *str)	// judge == 0ならbefore, judge == 1ならafter
+{
+	char	**newline;
+	char	*newline_ptr;
+	size_t	len;
 
-// 	newline_ptr = ft_strchr(str, '\n');
-// 	if (judge == 0)
-// 	{
-// 		if (!newline_ptr)
-// 			len = ft_strlen(str);
-// 		else
-// 			len = newline_ptr - str;
-// 		newline = ft_substr(str, 0, len);
-// 		if (!newline)
-// 			return (NULL);
-// 	}
-// 	else
-// 	{
-// 		if (!newline_ptr)
-// 			return (NULL);
-// 		len = ft_strlen(newline_ptr);
-// 		if (len == 1)
-// 			newline = ft_substr("\n", 0, ft_strlen("\n"));
-// 		else
-// 			newline = ft_substr(newline_ptr, 1, len - 1);
-// 		if (!newline)
-// 			return (NULL);
-// 	}
-// 	return (newline);
-// }
+	newline_ptr = ft_strchr(str, '\n');
+	if (!newline_ptr)
+	{
+		len = ft_strlen(str);
+		*newline[0] = str;
+		*newline[1] = NULL;
+	}
+	else
+	{
+		len = newline_ptr - str;
+		if (len == 0)
+			*newline[0] = NULL;
+		else
+			*newline[0] = ft_substr(str, 0, len);
+		*newline[1] = ft_substr(str, len + 1, ft_strlen(newline_ptr) - 1);
+	}
+
+}
 
 int	main(void)
 {
@@ -153,3 +147,6 @@ int	main(void)
 
 // gcc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c  -g -fsanitize=address -fsanitize=undefined
 // gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c -g -fsanitize=address -fsanitize=undefined
+
+
+// ギットハブ
