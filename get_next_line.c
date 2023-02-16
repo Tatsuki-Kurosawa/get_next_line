@@ -21,7 +21,7 @@ char	*get_next_line(int fd)
 	return (return_ptr);
 }
 
-char	*setstr(int fd, char *str)
+static char	*setstr(int fd, char *str)
 {
 	char	*read_str;
 	ssize_t	num_of_byte;
@@ -46,10 +46,11 @@ char	*setstr(int fd, char *str)
 		if (ft_strchr(str, '\n'))
 			break ;
 	}
+	free(read_str);
 	return (str);
 }
 
-char	*join(char *str, char *read_str, ssize_t num_of_byte)
+static char	*join(char *str, char *read_str, ssize_t num_of_byte)
 {
 	char	*return_ptr;
 
@@ -65,7 +66,7 @@ char	*join(char *str, char *read_str, ssize_t num_of_byte)
 	}
 }
 
-char	*getbeforenewline(char *str)
+static char	*getbeforenewline(char *str)
 {
 	char	*before_newline;
 	char	*newline_ptr;
@@ -82,7 +83,7 @@ char	*getbeforenewline(char *str)
 	return (before_newline);
 }
 
-char	*getafternewline(char *str)
+static char	*getafternewline(char *str)
 {
 	char	*newline_ptr;
 	char	*after_newline;
@@ -100,6 +101,38 @@ char	*getafternewline(char *str)
 		return (NULL);
 	return (after_newline);
 }
+
+// static char	*getnewline(char *str, int judge)	// judge == 0ならbefore, judge == 1ならafter
+// {
+// 	char	*newline;
+// 	char	*newline_ptr;
+// 	size_t	len;
+
+// 	newline_ptr = ft_strchr(str, '\n');
+// 	if (judge == 0)
+// 	{
+// 		if (!newline_ptr)
+// 			len = ft_strlen(str);
+// 		else
+// 			len = newline_ptr - str;
+// 		newline = ft_substr(str, 0, len);
+// 		if (!newline)
+// 			return (NULL);
+// 	}
+// 	else
+// 	{
+// 		if (!newline_ptr)
+// 			return (NULL);
+// 		len = ft_strlen(newline_ptr);
+// 		if (len == 1)
+// 			newline = ft_substr("\n", 0, ft_strlen("\n"));
+// 		else
+// 			newline = ft_substr(newline_ptr, 1, len - 1);
+// 		if (!newline)
+// 			return (NULL);
+// 	}
+// 	return (newline);
+// }
 
 int	main(void)
 {
