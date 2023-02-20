@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kurosawaitsuki <kurosawaitsuki@student.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/20 16:57:57 by kurosawaits       #+#    #+#             */
+/*   Updated: 2023/02/20 16:57:58 by kurosawaits      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 size_t	ft_strlen(const char *s)
@@ -34,7 +46,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (return_ptr);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	src_len;
 	size_t	i;
@@ -52,6 +64,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (src_len);
 }
 
+// joinとfreeを合わせる
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char		*return_ptr;
@@ -61,7 +74,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	str_size = ft_strlen(s1) + ft_strlen(s2);
-	return_ptr = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	return_ptr = (char *)malloc(sizeof(char) * (str_size + 1));
 	if (!return_ptr)
 		return (NULL);
 	check = ft_strlcpy(return_ptr, s1, ft_strlen(s1) + 1);
@@ -81,6 +94,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 char	*ft_strchr(const char *s, int c)
 {
+	if (!s)
+		return (NULL);
 	while (*s != '\0')
 	{
 		if (*s == (char)c)
