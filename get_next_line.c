@@ -6,7 +6,7 @@
 /*   By: kurosawaitsuki <kurosawaitsuki@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:57:53 by kurosawaits       #+#    #+#             */
-/*   Updated: 2023/02/22 18:45:25 by kurosawaits      ###   ########.fr       */
+/*   Updated: 2023/02/22 19:49:05 by kurosawaits      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	str = setline(fd, str);
 	if (!str)
+	{
+		free(str);
 		return (NULL);
+	}
 	new_line = get_new_line(str);
 	if (!new_line)
 	{
@@ -106,8 +109,6 @@ char	*get_next_line(int fd)
 	}
 	return_ptr = new_line[0];
 	str = new_line[1];
-	if (!str)
-		free(new_line[1]);
 	free(new_line);
 	return (return_ptr);
 }

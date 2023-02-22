@@ -23,3 +23,6 @@ int	main(void)
 // gcc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c  -g -fsanitize=address -fsanitize=undefined
 // gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c -g -fsanitize=address -fsanitize=undefined
 // gcc -Wall -Wextra -Werror -D BUFFER_SIZE=1 get_next_line.c get_next_line_utils.c -g -fsanitize=address -fsanitize=undefined
+
+// setline関数でmalloc失敗した場合、strもfreeする必要があるか？
+// →初回で失敗した場合、（static変数をfreeするとどうなるか？）
