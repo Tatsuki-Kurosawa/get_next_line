@@ -6,7 +6,7 @@
 /*   By: kurosawaitsuki <kurosawaitsuki@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:57:53 by kurosawaits       #+#    #+#             */
-/*   Updated: 2023/02/22 18:27:37 by kurosawaits      ###   ########.fr       */
+/*   Updated: 2023/02/22 18:45:25 by kurosawaits      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static char	*join(char *str, char *read_str, ssize_t num_of_byte)
 		{
 			return_ptr = ft_strjoin(str, read_str);
 			free(str);
-			str = NULL;
 		}
 		return (return_ptr);
 	}
@@ -48,7 +47,6 @@ static char	*setline(int fd, char *str)
 		if (num_of_byte == -1)
 		{
 			free(read_str);
-			read_str = NULL;
 			return (NULL);
 		}
 		else
@@ -57,23 +55,20 @@ static char	*setline(int fd, char *str)
 			break ;
 	}
 	free(read_str);
-	read_str = NULL;
 	return (str);
 }
 
 static char	**get_new_line(char *str)
 {
 	char	**newline;
-	char	*new_ptr;
 
 	newline = (char **)malloc(sizeof(char *) * (2 + 1));
 	if (!newline)
 	{
-		free(newline);
+		free(str);
 		return (NULL);
 	}
-	new_ptr = ft_strchr(str, '\n');
-	if (!new_ptr)
+	if (!(ft_strchr(str, '\n')))
 	{
 		if (ft_strlen(str) == 0 && *str == '\0')
 			newline[0] = NULL;
@@ -83,8 +78,9 @@ static char	**get_new_line(char *str)
 	}
 	else
 	{
-		newline[0] = ft_substr(str, 0, new_ptr - str + 1);
-		newline[1] = ft_substr(str, new_ptr - str + 1, ft_strlen(new_ptr) - 1);
+		newline[0] = ft_substr(str, 0, ft_strchr(str, '\n') - str + 1);
+		newline[1] = ft_substr(str, ft_strchr(str, '\n') - str + 1, \
+		ft_strlen(ft_strchr(str, '\n')) - 1);
 	}
 	newline[2] = NULL;
 	free(str);
