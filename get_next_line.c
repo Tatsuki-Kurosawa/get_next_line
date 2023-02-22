@@ -6,13 +6,11 @@
 /*   By: kurosawaitsuki <kurosawaitsuki@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:57:53 by kurosawaits       #+#    #+#             */
-/*   Updated: 2023/02/22 18:23:39 by kurosawaits      ###   ########.fr       */
+/*   Updated: 2023/02/22 18:27:37 by kurosawaits      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 
 static char	*join(char *str, char *read_str, ssize_t num_of_byte)
 {
@@ -63,7 +61,6 @@ static char	*setline(int fd, char *str)
 	return (str);
 }
 
-// new_lineとnewline[0]とnewline[1]はmalloc確保しているのでfreeする必要あり
 static char	**get_new_line(char *str)
 {
 	char	**newline;
@@ -93,7 +90,6 @@ static char	**get_new_line(char *str)
 	free(str);
 	return (newline);
 }
-// ft_substrとft_strlenがNULLの場合どうなるか？
 
 char	*get_next_line(int fd)
 {
@@ -119,25 +115,3 @@ char	*get_next_line(int fd)
 	free(new_line);
 	return (return_ptr);
 }
-
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
-// 	size_t	i;
-
-// 	i = 0;
-// 	fd = open("./test.txt", O_RDONLY);
-// 	while (i < 2)
-// 	{
-// 		printf("%lu回目\n", i + 1);
-// 		line = get_next_line(fd);
-// 		printf("|%s|\n", line);
-// 		i ++;
-// 	}
-// 	return (0);
-// }
-
-// gcc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c  -g -fsanitize=address -fsanitize=undefined
-// gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c -g -fsanitize=address -fsanitize=undefined
-// gcc -Wall -Wextra -Werror -D BUFFER_SIZE=1 get_next_line.c get_next_line_utils.c -g -fsanitize=address -fsanitize=undefined
