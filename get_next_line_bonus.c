@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kurosawaitsuki <kurosawaitsuki@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:57:53 by kurosawaits       #+#    #+#             */
-/*   Updated: 2023/02/23 12:01:22 by kurosawaits      ###   ########.fr       */
+/*   Updated: 2023/02/23 12:06:08 by kurosawaits      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*join(char *str, char *read_str, ssize_t num_of_byte)
 {
@@ -89,26 +89,29 @@ static char	**get_new_line(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str[OPEN_MAX];
 	char		*return_ptr;
 	char		**new_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	str = setline(fd, str);
-	if (!str)
+	str[fd] = setline(fd, str[fd]);
+	if (!str[fd])
 	{
-		free(str);
+		free(str[fd]);
 		return (NULL);
 	}
-	new_line = get_new_line(str);
+	new_line = get_new_line(str[fd]);
 	if (!new_line)
 	{
-		free(str);
+		free(str[fd]);
 		return (NULL);
 	}
 	return_ptr = new_line[0];
-	str = new_line[1];
+	str[fd] = new_line[1];
 	free(new_line);
 	return (return_ptr);
 }
+
+// strの内容を後ろにつける？
+// fdの上限は？ → 1024 OPEN_MAX
