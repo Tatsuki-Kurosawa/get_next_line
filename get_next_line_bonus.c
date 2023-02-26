@@ -6,7 +6,7 @@
 /*   By: kurosawaitsuki <kurosawaitsuki@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:57:53 by kurosawaits       #+#    #+#             */
-/*   Updated: 2023/02/26 21:14:09 by kurosawaits      ###   ########.fr       */
+/*   Updated: 2023/02/26 21:34:46 by kurosawaits      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*get_next_line(int fd)
 	char		*return_ptr;
 	char		**new_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd < OPEN_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
 		return (NULL);
 	str[fd] = setline(fd, str[fd]);
 	if (!str[fd])
