@@ -6,7 +6,7 @@
 /*   By: kurosawaitsuki <kurosawaitsuki@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:57:53 by kurosawaits       #+#    #+#             */
-/*   Updated: 2023/02/23 12:06:08 by kurosawaits      ###   ########.fr       */
+/*   Updated: 2023/02/26 21:14:09 by kurosawaits      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,21 @@ static char	*setline(int fd, char *str)
 	char	*read_str;
 	ssize_t	num_of_byte;
 
-	read_str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	read_str = (char *)malloc(sizeof(char) * (BUFFER_SIZE + (size_t)1));
 	if (!read_str)
 		return (NULL);
 	num_of_byte = 1;
 	while (num_of_byte)
 	{
 		num_of_byte = read(fd, read_str, BUFFER_SIZE);
-		read_str[num_of_byte] = '\0';
 		if (num_of_byte == -1)
 		{
+			free(str);
 			free(read_str);
 			return (NULL);
 		}
-		else
-			str = join(str, read_str, num_of_byte);
+		read_str[num_of_byte] = '\0';
+		str = join(str, read_str, num_of_byte);
 		if (!str || ft_strchr(str, '\n'))
 			break ;
 	}
@@ -93,14 +93,11 @@ char	*get_next_line(int fd)
 	char		*return_ptr;
 	char		**new_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd < OPEN_MAX)
 		return (NULL);
 	str[fd] = setline(fd, str[fd]);
 	if (!str[fd])
-	{
-		free(str[fd]);
 		return (NULL);
-	}
 	new_line = get_new_line(str[fd]);
 	if (!new_line)
 	{
@@ -112,6 +109,3 @@ char	*get_next_line(int fd)
 	free(new_line);
 	return (return_ptr);
 }
-
-// strの内容を後ろにつける？
-// fdの上限は？ → 1024 OPEN_MAX
