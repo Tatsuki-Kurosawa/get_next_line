@@ -6,7 +6,7 @@
 /*   By: kurosawaitsuki <kurosawaitsuki@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:57:57 by kurosawaits       #+#    #+#             */
-/*   Updated: 2023/02/22 19:55:50 by kurosawaits      ###   ########.fr       */
+/*   Updated: 2023/02/27 23:33:29 by kurosawaits      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	return (src_len);
 }
 
-// joinとfreeを合わせる
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char		*return_ptr;

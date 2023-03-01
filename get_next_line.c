@@ -6,13 +6,13 @@
 /*   By: kurosawaitsuki <kurosawaitsuki@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 16:57:53 by kurosawaits       #+#    #+#             */
-/*   Updated: 2023/02/26 21:12:03 by kurosawaits      ###   ########.fr       */
+/*   Updated: 2023/02/28 01:01:23 by kurosawaits      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*join(char *str, char *read_str, ssize_t num_of_byte)
+static char	*ft_join(char *str, char *read_str, ssize_t num_of_byte)
 {
 	char	*return_ptr;
 
@@ -50,7 +50,7 @@ static char	*setline(int fd, char *str)
 			return (NULL);
 		}
 		read_str[num_of_byte] = '\0';
-		str = join(str, read_str, num_of_byte);
+		str = ft_join(str, read_str, num_of_byte);
 		if (!str || ft_strchr(str, '\n'))
 			break ;
 	}
@@ -100,10 +100,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	new_line = get_new_line(str);
 	if (!new_line)
-	{
-		free(str);
 		return (NULL);
-	}
 	return_ptr = new_line[0];
 	str = new_line[1];
 	free(new_line);
